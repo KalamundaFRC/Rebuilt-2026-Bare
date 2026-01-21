@@ -5,6 +5,11 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import java.lang.annotation.Target;
+
+import javax.naming.spi.DirStateFactory.Result;
+
 import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.ShooterConstants;
 
@@ -21,12 +26,15 @@ public class Shooter extends SubsystemBase {
 
     }
 
+
     public Command SetShooter(double value) {
-        return run(
+        return runEnd(
             () -> {
                 Double target = MathUtil.clamp(value,ShooterConstants.ShooterMinRotations, ShooterConstants.ShooterMaxRotations);
                 Double result = PIDController.calculate(Velocity,target);
                 Shooter.set(result);
+            }, () -> {
+                Shooter.set(0);
             }
         );
     }
