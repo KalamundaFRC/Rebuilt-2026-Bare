@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.subsystems.Indexer;
 
+import frc.robot.subsystems.Intake;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -24,6 +25,7 @@ import frc.robot.subsystems.Indexer;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Intake m_intake = new Intake();
 
   private final Indexer indexerSubsystem = new Indexer();
 
@@ -54,6 +56,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.rightTrigger().whileTrue(m_intake.IntakeRun());
   }
 
   /**
