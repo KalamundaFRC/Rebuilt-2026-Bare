@@ -22,4 +22,9 @@ public final class Constants {
     public static final int IntakeTalonCurrentLimit = 40;
     public static final int IntakeTalonVoltage = 6;
   }
+
+  public static class ShooterConstants {
+    public static final double ShooterMaxRotations = 100;
+    public static final double ShooterMinRotations = 0;
+  }
 }
