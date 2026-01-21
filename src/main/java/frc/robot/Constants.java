@@ -18,6 +18,10 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+  public static class PivotConstants {
+    public static final double PivotUpperBoundLimit = 99;
+    public static final double PivotLowerBoundLimit = 99;
+    public static final double PivotMaxVelocity = 99;
   public static class IntakeConstants {
     public static final int IntakeTalonCurrentLimit = 40;
     public static final int IntakeTalonVoltage = 6;
