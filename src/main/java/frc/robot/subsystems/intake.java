@@ -6,10 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants.IntakeConstants;
 
 
-public class Intake extends SubsystemBase {
+public class intake extends SubsystemBase {
     //vars here
     WPI_TalonSRX Intake_Motor;
-    public Intake() {
+    public intake() {
         Intake_Motor = new WPI_TalonSRX(99);
         Intake_Motor.configPeakCurrentLimit(IntakeConstants.IntakeTalonCurrentLimit);
     }
