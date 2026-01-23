@@ -7,7 +7,12 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+
+import frc.robot.subsystems.Example;
+
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveSubsysubsystem;
+import swervelib.SwerveInputStream;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -22,6 +27,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+  private final Example exampleSubsystem = new Example();
+
+  private final SwerveSubsysubsystem driveBase = new SwerveSubsysubsystem();
+
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -30,7 +40,25 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    driveBase.setDefaultCommand(driveFieldOrientedAngularVelocity);
   }
+
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(driveBase.getSwerveDrive(),
+                                                                () -> m_driverController.getLeftY() * -1,
+                                                                () -> m_driverController.getLeftX() * -1)
+                                                            .withControllerRotationAxis(m_driverController::getRightX)
+                                                            .deadband(OperatorConstants.deadzone)
+                                                            .scaleTranslation(0.8)
+                                                            .allianceRelativeControl(true);
+
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(m_driverController::getRightX,
+                                                                                             m_driverController::getRightY)
+                                                           .headingWhile(true);
+
+  public Command driveFieldOrientedDirectAngle = driveBase.driveFieldOriented(driveDirectAngle);
+
+  public Command driveFieldOrientedAngularVelocity = driveBase.driveFieldOriented(driveAngularVelocity);
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -49,6 +77,9 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    m_driverController.a().whileTrue(exampleSubsystem.rawIndexerCommand(6).withTimeout(3));
+
   }
 
   /**
