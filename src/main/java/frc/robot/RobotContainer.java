@@ -12,9 +12,6 @@ import frc.robot.subsystems.SwerveSubsysubsystem;
 import swervelib.SwerveInputStream;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -35,7 +32,6 @@ public class RobotContainer {
   private final SwerveSubsysubsystem driveBase = new SwerveSubsysubsystem();
 
    // private final SendableChooser<Command> autoChooser;
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Intake m_intake = new Intake();
 
   private final Indexer indexerSubsystem = new Indexer();
@@ -83,7 +79,6 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.rightTrigger().whileTrue(m_intake.IntakeRun());
   }
 

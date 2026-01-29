@@ -29,6 +29,8 @@ public final class Constants {
     public static final double PivotUpperBoundLimit = 99;
     public static final double PivotLowerBoundLimit = 99;
     public static final double PivotMaxVelocity = 99;
+  }
+
   public static class IntakeConstants {
     public static final int IntakeTalonCurrentLimit = 40;
     public static final int IntakeTalonVoltage = 6;
@@ -38,4 +40,5 @@ public final class Constants {
     public static final double ShooterMaxRotations = 100;
     public static final double ShooterMinRotations = 0;
   }
-}
+ }
+
