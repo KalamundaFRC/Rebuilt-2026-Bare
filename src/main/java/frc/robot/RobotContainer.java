@@ -12,11 +12,18 @@ import frc.robot.subsystems.SwerveSubsysubsystem;
 import swervelib.SwerveInputStream;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import frc.robot.subsystems.Indexer;
+
+import frc.robot.subsystems.Intake;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -28,6 +35,10 @@ public class RobotContainer {
   private final SwerveSubsysubsystem driveBase = new SwerveSubsysubsystem();
 
    // private final SendableChooser<Command> autoChooser;
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Intake m_intake = new Intake();
+
+  private final Indexer indexerSubsystem = new Indexer();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -70,6 +81,10 @@ public class RobotContainer {
   private void configureBindings() {
 
 
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // cancelling on release.
+    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.rightTrigger().whileTrue(m_intake.IntakeRun());
   }
 
   /**
