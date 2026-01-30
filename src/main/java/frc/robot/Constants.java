@@ -24,6 +24,9 @@ public final class Constants {
     public static final double maxSpeed = (8);
     
   }
+  public class MagazineConstants{
+    public static final Integer magazineCurrentLimit=40;
+  }
 
   public static class PivotConstants {
     public static final double PivotUpperBoundLimit = 99;
