@@ -8,13 +8,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.MagazineConstants;
 
-public class Magazine extends SubsystemBase{
+public class Magazine extends SubsystemBase{    
 WPI_TalonSRX Magazine_Motor;
     //constructer
-}public Magazine(){
+}
+
+public Magazine(){
     Magazine_Motor=new WPI_TalonSRX(99);
     Magazine_Motor.configPeakCurrentLimit(40);
-
 }
 public Command runMagazine(double voltage){
     return runEnd(
@@ -24,5 +25,5 @@ public Command runMagazine(double voltage){
         () -> {
             Magazine_Motor.setVoltage(0);
         });
-
-}
+    }
+    
