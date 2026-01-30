@@ -11,7 +11,7 @@ import frc.robot.Constants.MagazineConstants;
 public class Magazine extends SubsystemBase{    
 WPI_TalonSRX Magazine_Motor;
     //constructer
-}
+
 
 public Magazine(){
     Magazine_Motor=new WPI_TalonSRX(99);
@@ -26,4 +26,4 @@ public Command runMagazine(double voltage){
             Magazine_Motor.setVoltage(0);
         });
     }
-    
+}
