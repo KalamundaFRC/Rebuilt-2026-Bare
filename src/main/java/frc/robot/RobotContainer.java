@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsysubsystem;
@@ -19,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.subsystems.Indexer;
-
+import frc.robot.subsystems.SwerveSubsysubsystem;
 import frc.robot.subsystems.Intake;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,8 +34,9 @@ public class RobotContainer {
 
    // private final SendableChooser<Command> autoChooser;
   private final Intake m_intake = new Intake();
-
+  private final SwerveSubsysubsystem m_SwerveSubsysubsystem = new SwerveSubsysubsystem();
   private final Indexer indexerSubsystem = new Indexer();
+  private final SendableChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -46,6 +48,17 @@ public class RobotContainer {
     configureBindings();
 
     driveBase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    //Set the default auto (do nothing) 
+    autoChooser.setDefaultOption("Do Nothing", Commands.none());
+
+    //Add a simple auto option to have the robot drive forward for 1 second then stop
+    // autoChooser.addOption("Drive Forward", driveBase.);
+
+    //Put the autoChooser on the SmartDashboard
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
   }
 
@@ -75,11 +88,18 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-
+    Command driveFieldOrientedDirectAngle = driveBase.driveFieldOriented(driveDirectAngle);
+    Command driveFieldOrientedAnglularVelocity = driveBase.driveFieldOriented(driveAngularVelocity);
+//    Command driveRobotOrientedAngularVelocity = driveBase.driveFieldOriented(driveRobotOriented);
+    //Command driveSetpointGen = driveBase.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
+    // Command driveFieldOrientedDirectAngleKeyboard = driveBase.driveFieldOriented(driveDirectAngleKeyboard);
+    // Command driveFieldOrientedAnglularVelocityKeyboard = driveBase.driveFieldOriented(driveAngularVelocityKeyboard);
+    // Command driveSetpointGenKeyboard = driveBase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleKeyboard);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.rightTrigger().whileTrue(m_intake.IntakeRun());
+    m_driverController.a().onTrue(m_SwerveSubsysubsystem.resetOrientation(driveBase.getSwerveDrive()));
   }
 
   /**
@@ -91,4 +111,10 @@ public class RobotContainer {
   //   // An example command will be run in autonomous
   //   return Autos.exampleAuto(m_exampleSubsystem);
   // }
+
+  public Command getAutonomousCommand()
+  {
+    // Pass in the selected auto from the SmartDashboard as our desired autnomous commmand 
+    return autoChooser.getSelected();
+  }
 }

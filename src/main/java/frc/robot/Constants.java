@@ -21,7 +21,7 @@ public final class Constants {
   }
 
   public class SwerveConstants{
-    public static final double maxSpeed = (8);
+    public static final double maxSpeed = (15.7);
     
   }
 
