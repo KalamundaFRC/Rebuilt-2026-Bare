@@ -3,10 +3,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import java.lang.annotation.Target;
+import java.util.function.BooleanSupplier;
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -18,11 +22,13 @@ public class Shooter extends SubsystemBase {
     PIDController PIDController;
     RelativeEncoder Encoder;
     Double Velocity;
+    Timer timer;
     public Shooter() {
         Shooter = new SparkMax(99,MotorType.kBrushless);
         PIDController = new PIDController(0, 0, 0);
         Encoder = Shooter.getEncoder();
         Velocity = Encoder.getVelocity();
+        timer.start();
 
     }
 
@@ -38,4 +44,5 @@ public class Shooter extends SubsystemBase {
             }
         );
     }
+
 }

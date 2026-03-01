@@ -36,6 +36,8 @@ public class RobotContainer {
 
   private final Indexer indexerSubsystem = new Indexer();
 
+  private final SendableChooser<Command> autoChooser;
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -45,7 +47,11 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
+    autoChooser = AutoBuilder.buildAutoChooser();
+
     driveBase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
   }
 
@@ -76,10 +82,14 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+        Command driveSetpointGen = driveBase.driveWithSetpointGeneratorFieldRelative(
+        driveDirectAngle);
+
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.rightTrigger().whileTrue(m_intake.IntakeRun());
+
   }
 
   /**
@@ -87,8 +97,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   // An example command will be run in autonomous
-  //   return Autos.exampleAuto(m_exampleSubsystem);
-  // }
+  public Command getAutonomousCommand() {
+    // An example command will be run in autonomous
+    //return Autos.exampleAuto(m_exampleSubsystem);
+
+    return autoChooser.getSelected();
+  }
 }
