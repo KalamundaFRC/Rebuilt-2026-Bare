@@ -37,6 +37,25 @@ public class Indexer extends SubsystemBase {
     public Command rawMagCommand(double value){
         return runEnd(() -> {
             Mag_Motor.set(value*0.7);
+        }, () -> {
+            Mag_Motor.set(0);
+        });
+    }
+
+    public Command shoot(double value){
+        return runEnd(() -> {
+            Mag_Motor.set(-value*0.7);
+            Indexer_Motor.set(value);
+        }, () -> {
+            Mag_Motor.set(0);
+            Indexer_Motor.set(0);
+        });
+    }
+
+    
+    public Command intake(double value){
+        return runEnd(() -> {
+            Mag_Motor.set(value*0.7);
             Indexer_Motor.set(value);
         }, () -> {
             Mag_Motor.set(0);

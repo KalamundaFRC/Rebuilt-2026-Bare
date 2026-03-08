@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.reduxrobotics.sensors.canandcolor.DigoutChannel.Index;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Indexer m_index = new Indexer();
+  private final SwerveSubsystem m_SwerveSubsysubsystem = new SwerveSubsystem();
   // private final Pivot m_Pivot = new Pivot();
 
   private final SendableChooser<Command> autoChooser;
@@ -91,10 +93,13 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.leftTrigger().whileTrue(m_intake.IntakeRun().alongWith(m_index.rawMagCommand(1)));
-    // m_driverController.leftTrigger().whileTrue(m_shooter.SetShooter(3));
+    // m_driverController.a().onTrue(driveBase.resetOdometry(null));
+    m_driverController.leftTrigger().whileTrue(m_intake.IntakeRun().alongWith(m_index.intake(1)));
     m_driverController.rightBumper().whileTrue(m_shooter.RawShooter(1));
-    m_driverController.rightTrigger().whileTrue(m_index.rawIndexerCommand(1));
+    m_driverController.rightTrigger().whileTrue(m_index.shoot(-1).alongWith(m_intake.IntakeRun()));
+    m_driverController.a().onTrue(m_SwerveSubsysubsystem.resetOrientation(driveBase.getSwerveDrive()));
+    
+
     // m_driverController.leftBumper().whileTrue(m_Pivot.SetPivot(1));
 
   }

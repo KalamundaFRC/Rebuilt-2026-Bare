@@ -97,7 +97,13 @@ public class SwerveSubsystem extends SubsystemBase {
     public ChassisSpeeds getRobotVelocity(){
     return swerveDrive.getRobotVelocity();
   }
-
+  public Command resetOrientation(SwerveDrive swervedrivevar){
+      return runOnce(
+        () -> {
+          swervedrivevar.resetOdometry(pose);
+        }
+      );
+    }
   public void setupPathPlanner()
   {
     // Load the RobotConfig from the GUI settings. You should probably

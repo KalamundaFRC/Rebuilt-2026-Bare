@@ -33,7 +33,7 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static final int IntakeTalonCurrentLimit = 30;
-    public static final int IntakeTalonVoltage = -4;
+    public static final int IntakeTalonVoltage = -6;
   }
 
   public static class ShooterConstants {
