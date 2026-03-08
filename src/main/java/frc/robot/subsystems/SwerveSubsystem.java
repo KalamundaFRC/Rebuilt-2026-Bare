@@ -40,12 +40,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class SwerveSubsysubsystem extends SubsystemBase {
+public class SwerveSubsystem extends SubsystemBase {
     File swerveJsonDirectory;
     SwerveDrive swerveDrive;
     Pose2d pose;
 
-    public SwerveSubsysubsystem(){
+    public SwerveSubsystem(){
         try{
         pose = new Pose2d(new Translation2d(Meter.of(1), Meter.of(4)), Rotation2d.fromDegrees(0));
         swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");

@@ -8,7 +8,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.SwerveSubsysubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,8 +19,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.subsystems.Indexer;
-
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Pivot;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -29,12 +31,13 @@ import frc.robot.subsystems.Intake;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsysubsystem driveBase = new SwerveSubsysubsystem();
+  private final SwerveSubsystem driveBase = new SwerveSubsystem();
 
    // private final SendableChooser<Command> autoChooser;
   private final Intake m_intake = new Intake();
-
-  private final Indexer indexerSubsystem = new Indexer();
+  private final Shooter m_shooter = new Shooter();
+  private final Indexer m_index = new Indexer();
+  // private final Pivot m_Pivot = new Pivot();
 
   private final SendableChooser<Command> autoChooser;
 
@@ -88,7 +91,11 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.rightTrigger().whileTrue(m_intake.IntakeRun());
+    m_driverController.leftTrigger().whileTrue(m_intake.IntakeRun().alongWith(m_index.rawMagCommand(1)));
+    // m_driverController.leftTrigger().whileTrue(m_shooter.SetShooter(3));
+    m_driverController.rightBumper().whileTrue(m_shooter.RawShooter(1));
+    m_driverController.rightTrigger().whileTrue(m_index.rawIndexerCommand(1));
+    // m_driverController.leftBumper().whileTrue(m_Pivot.SetPivot(1));
 
   }
 

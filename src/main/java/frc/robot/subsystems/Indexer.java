@@ -10,15 +10,37 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Indexer extends SubsystemBase {
     WPI_TalonSRX Indexer_Motor;
+    WPI_TalonSRX Mag_Motor;
 
     public Indexer(){
-        Indexer_Motor = new WPI_TalonSRX(99);
+        Indexer_Motor = new WPI_TalonSRX(15);
+        Mag_Motor = new WPI_TalonSRX(14);
+
+        Mag_Motor.configPeakCurrentLimit(30,10);
+        Mag_Motor.configPeakCurrentDuration(200,10);
+        Mag_Motor.configContinuousCurrentLimit(20,10);
+
+        Indexer_Motor.configPeakCurrentLimit(30,10);
+        Indexer_Motor.configPeakCurrentDuration(200,10);
+        Indexer_Motor.configContinuousCurrentLimit(20,10);
     }
 
-    public Command rawIndexerCommand(double voltage){
-        return run(
-            ( ) -> {
-                Indexer_Motor.setVoltage(voltage);
+    public Command rawIndexerCommand(double value){
+        return runEnd(
+            () -> {
+                Indexer_Motor.set(value);
+            }, () -> {
+                Indexer_Motor.set(0);
             });
+    }
+
+    public Command rawMagCommand(double value){
+        return runEnd(() -> {
+            Mag_Motor.set(value*0.7);
+            Indexer_Motor.set(value);
+        }, () -> {
+            Mag_Motor.set(0);
+            Indexer_Motor.set(0);
+        });
     }
 }

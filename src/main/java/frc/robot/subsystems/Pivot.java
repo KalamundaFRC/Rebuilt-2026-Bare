@@ -14,24 +14,27 @@ import edu.wpi.first.math.controller.PIDController;
 public class Pivot extends SubsystemBase {
     WPI_TalonSRX Pivot_Motor;
     PIDController pidController;
-    DutyCycleEncoder Encoder;
+    //DutyCycleEncoder Encoder;
     double DoubleEncoderOutput;
     public Pivot () {
-        Pivot_Motor = new WPI_TalonSRX(99);
+        Pivot_Motor = new WPI_TalonSRX(13);
         pidController = new PIDController(0, 0, 0);
-        Encoder = new DutyCycleEncoder(99);
-        DoubleEncoderOutput = Encoder.get();
+        //Encoder = new DutyCycleEncoder(99);
+        //DoubleEncoderOutput = Encoder.get();
+        Pivot_Motor.configPeakCurrentLimit(30,10);
+        Pivot_Motor.configPeakCurrentDuration(200,10);
+        Pivot_Motor.configContinuousCurrentLimit(20,10);
     }
-    public Command SetPivot(double value){
-        return runEnd(
-        () -> {
-            Double target = MathUtil.clamp(value,PivotConstants.PivotLowerBoundLimit,PivotConstants.PivotUpperBoundLimit);
-            Double result = MathUtil.clamp(pidController.calculate(Encoder.get(),target),-1*Constants.PivotConstants.PivotMaxVelocity,Constants.PivotConstants.PivotMaxVelocity);
-            Pivot_Motor.set(result);
-        }, () -> {
-            Pivot_Motor.set(0);
-        });
-    }
+    // public Command SetPivot(double value){
+    //     return runEnd(
+    //     () -> {
+    //         Double target = MathUtil.clamp(value,PivotConstants.PivotLowerBoundLimit,PivotConstants.PivotUpperBoundLimit);
+    //         Double result = MathUtil.clamp(pidController.calculate(Encoder.get(),target),-1*Constants.PivotConstants.PivotMaxVelocity,Constants.PivotConstants.PivotMaxVelocity);
+    //         Pivot_Motor.set(result);
+    //     }, () -> {
+    //         Pivot_Motor.set(0);
+    //     });
+    // }
 }
 
 

@@ -5,15 +5,21 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": null
+            "pathName": "Go To Sea"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "ClearSea"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Go Back To Reef"
           }
         }
       ]

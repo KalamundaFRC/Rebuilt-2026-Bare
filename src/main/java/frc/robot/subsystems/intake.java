@@ -10,8 +10,10 @@ public class Intake extends SubsystemBase {
     //vars here
     WPI_TalonSRX Intake_Motor;
     public Intake() {
-        Intake_Motor = new WPI_TalonSRX(99);
-        Intake_Motor.configPeakCurrentLimit(IntakeConstants.IntakeTalonCurrentLimit);
+        Intake_Motor = new WPI_TalonSRX(16);
+        Intake_Motor.configPeakCurrentLimit(30,10);
+        Intake_Motor.configPeakCurrentDuration(200,10);
+        Intake_Motor.configContinuousCurrentLimit(20,10);
     }
 
     public Command IntakeRun() {
