@@ -38,8 +38,8 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Indexer m_index = new Indexer();
-  private final SwerveSubsystem m_SwerveSubsysubsystem = new SwerveSubsystem();
-  // private final Pivot m_Pivot = new Pivot();
+  // private final SwerveSubsystem m_SwerveSubsysubsystem = new SwerveSubsystem();
+  private final Pivot m_Pivot = new Pivot();
 
   private final SendableChooser<Command> autoChooser;
 
@@ -50,6 +50,9 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    NamedCommands.registerCommand("intake", Commands.runOnce(()->{m_intake.IntakeRun();}));
+    NamedCommands.registerCommand("shoot", Commands.runOnce(()->{m_shooter.RawShooter(1);}));
+    NamedCommands.registerCommand("fire", Commands.runOnce(()->{m_index.shoot(-1).alongWith(m_intake.IntakeRun());}));
     configureBindings();
 
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -97,10 +100,8 @@ public class RobotContainer {
     m_driverController.leftTrigger().whileTrue(m_intake.IntakeRun().alongWith(m_index.intake(1)));
     m_driverController.rightBumper().whileTrue(m_shooter.RawShooter(1));
     m_driverController.rightTrigger().whileTrue(m_index.shoot(-1).alongWith(m_intake.IntakeRun()));
-    m_driverController.a().onTrue(m_SwerveSubsysubsystem.resetOrientation(driveBase.getSwerveDrive()));
-    
-
-    // m_driverController.leftBumper().whileTrue(m_Pivot.SetPivot(1));
+    m_driverController.a().onTrue(driveBase.resetOrientation(driveBase.getSwerveDrive()));
+    m_driverController.b().whileTrue(m_Pivot.runPivot(1));
 
   }
 

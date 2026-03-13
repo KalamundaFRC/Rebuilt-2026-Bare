@@ -35,6 +35,14 @@ public class Pivot extends SubsystemBase {
     //         Pivot_Motor.set(0);
     //     });
     // }
+
+    public Command runPivot(double value){
+        return runEnd(()->{
+            Pivot_Motor.set(value);
+        }, ()->{
+            Pivot_Motor.set(0);
+        });
+    }
 }
 
 
